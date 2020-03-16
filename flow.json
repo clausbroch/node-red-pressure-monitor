@@ -1,1 +1,722 @@
-[]
+[
+    {
+        "id": "b43ac849.4051e",
+        "type": "tab",
+        "label": "Pressure",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "91d5d206.71d94",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "6718eaff.5cc0c4",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Logging",
+        "icon": "fa-tachometer",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "3d3cdbae.9df2c4",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Settings",
+        "icon": "fa-check-square",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "cf35c896.375ae8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Pressure",
+        "tab": "6718eaff.5cc0c4",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "7df1b373.39877c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Sensor",
+        "tab": "3d3cdbae.9df2c4",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "5757e3d3.7b8f1c",
+        "type": "inject",
+        "z": "b43ac849.4051e",
+        "name": "Start",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 120,
+        "wires": [
+            [
+                "f064e597.cce9d8",
+                "bea0e5c3.54df78"
+            ]
+        ]
+    },
+    {
+        "id": "f064e597.cce9d8",
+        "type": "i2c scan",
+        "z": "b43ac849.4051e",
+        "x": 340,
+        "y": 120,
+        "wires": [
+            [],
+            [
+                "46c82397.265dcc"
+            ]
+        ]
+    },
+    {
+        "id": "46c82397.265dcc",
+        "type": "i2c out",
+        "z": "b43ac849.4051e",
+        "name": "Set automatic mode",
+        "address": "",
+        "command": "2",
+        "payload": "-32",
+        "payloadType": "num",
+        "count": "1",
+        "x": 580,
+        "y": 140,
+        "wires": [
+            [
+                "176e31df.f5048e"
+            ]
+        ]
+    },
+    {
+        "id": "176e31df.f5048e",
+        "type": "debug",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 770,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "143dcd2d.f9f5d3",
+        "type": "comment",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "info": "0xE0 (-32) enables automatic conversion @Tx2048 which provides 0,4 ksps",
+        "x": 540,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "59d64ad1.5ef994",
+        "type": "inject",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "topic": "",
+        "payload": "read",
+        "payloadType": "str",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 260,
+        "wires": [
+            [
+                "f723afc5.d68d2"
+            ]
+        ]
+    },
+    {
+        "id": "f723afc5.d68d2",
+        "type": "i2c in",
+        "z": "b43ac849.4051e",
+        "name": "Read binary value",
+        "address": "80",
+        "command": "0",
+        "count": "2",
+        "x": 310,
+        "y": 260,
+        "wires": [
+            [
+                "3781f075.d0f51"
+            ]
+        ]
+    },
+    {
+        "id": "dadb0a58.4f7db8",
+        "type": "debug",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 690,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "3781f075.d0f51",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "Get adc value",
+        "func": "var raw_adc = (msg.payload[0] & 0x0F) * 256 + msg.payload[1];\nmsg.raw_adc = raw_adc;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 500,
+        "y": 260,
+        "wires": [
+            [
+                "dadb0a58.4f7db8",
+                "7eb58181.ad997"
+            ]
+        ]
+    },
+    {
+        "id": "f9e1faeb.119d68",
+        "type": "ui_gauge",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "group": "cf35c896.375ae8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Pressure",
+        "label": "{{msg.pressure_label}}",
+        "format": "{{msg.payload}}",
+        "min": 0,
+        "max": "3",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1140,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "bfe4be57.d9a",
+        "type": "ui_chart",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "group": "cf35c896.375ae8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "No data to display",
+        "dot": false,
+        "ymin": "2000",
+        "ymax": "2100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 1090,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c8026dfb.e7aa5",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "raw_adc",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "pressure_label",
+                "pt": "msg",
+                "to": "pressure_label",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 260,
+        "wires": [
+            [
+                "bfe4be57.d9a"
+            ]
+        ]
+    },
+    {
+        "id": "bede8be4.54de28",
+        "type": "ui_dropdown",
+        "z": "b43ac849.4051e",
+        "name": "Sensor type",
+        "label": "Sensor type:",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "7df1b373.39877c",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "options": [
+            {
+                "label": "0 - 5 Bar",
+                "value": 500000,
+                "type": "num"
+            },
+            {
+                "label": "0 - 12 Bar",
+                "value": "1200000",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 290,
+        "y": 460,
+        "wires": [
+            [
+                "5d41d488.7ea84c"
+            ]
+        ]
+    },
+    {
+        "id": "e92acd6a.84c0b",
+        "type": "debug",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 650,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "7eb58181.ad997",
+        "type": "smooth",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "property": "raw_adc",
+        "action": "low",
+        "count": "8",
+        "round": "0",
+        "mult": "single",
+        "reduce": false,
+        "x": 700,
+        "y": 260,
+        "wires": [
+            [
+                "c8026dfb.e7aa5",
+                "6e1be725.32a228"
+            ]
+        ]
+    },
+    {
+        "id": "5d41d488.7ea84c",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "sensor_range",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 460,
+        "wires": [
+            [
+                "e92acd6a.84c0b"
+            ]
+        ]
+    },
+    {
+        "id": "65bef1f9.9d9b9",
+        "type": "ui_dropdown",
+        "z": "b43ac849.4051e",
+        "name": "Pressure unit",
+        "label": "Unit:",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "7df1b373.39877c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "options": [
+            {
+                "label": "Bar",
+                "value": 100000,
+                "type": "num"
+            },
+            {
+                "label": "PSI",
+                "value": "6895",
+                "type": "str"
+            },
+            {
+                "label": "kPa",
+                "value": "1000",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 290,
+        "y": 520,
+        "wires": [
+            [
+                "1f3ed97a.a6aae7"
+            ]
+        ]
+    },
+    {
+        "id": "584cafc1.5ae0a",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "bar",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pressure_conversion",
+                "pt": "flow",
+                "to": "100000",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "pressure_unit",
+                "pt": "flow",
+                "to": "BAR",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 500,
+        "wires": [
+            [
+                "bea0e5c3.54df78"
+            ]
+        ]
+    },
+    {
+        "id": "1f3ed97a.a6aae7",
+        "type": "switch",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "100000",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "6895",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1000",
+                "vt": "num"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 450,
+        "y": 520,
+        "wires": [
+            [
+                "584cafc1.5ae0a"
+            ],
+            [
+                "631bde1a.6d4a7"
+            ],
+            [
+                "a0247667.db1b88"
+            ]
+        ]
+    },
+    {
+        "id": "631bde1a.6d4a7",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "psi",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pressure_conversion",
+                "pt": "flow",
+                "to": "6895",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "pressure_unit",
+                "pt": "flow",
+                "to": "PSI",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 540,
+        "wires": [
+            [
+                "bea0e5c3.54df78"
+            ]
+        ]
+    },
+    {
+        "id": "a0247667.db1b88",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "kPa",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pressure_conversion",
+                "pt": "flow",
+                "to": "1000",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "pressure_unit",
+                "pt": "flow",
+                "to": "KPA",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 580,
+        "wires": [
+            [
+                "bea0e5c3.54df78"
+            ]
+        ]
+    },
+    {
+        "id": "6e1be725.32a228",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "calculate pressure",
+        "func": "var pressure = (msg.raw_adc * flow.get('sensor_range')) / (4095.0 * flow.get('pressure_conversion'));\n\nmsg.pressure = pressure;\nmsg.payload = pressure.toFixed(flow.get('pressure_decimals'));\nmsg.pressure_label = flow.get('pressure_label');\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 890,
+        "y": 300,
+        "wires": [
+            [
+                "f9e1faeb.119d68",
+                "ae533b1f.9a4388"
+            ]
+        ]
+    },
+    {
+        "id": "bea0e5c3.54df78",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "configure gauge",
+        "func": "var ui_control = {};\n\nui_control.min = 0;\n\nswitch(flow.get('pressure_unit')) {\n    default:\n    case \"BAR\":\n        ui_control.max = 3;\n        ui_control.seg1 = 1;\n        ui_control.seg2 = 2;\n        flow.set('pressure_label', \"Bar\");\n        flow.set('pressure_decimals', 2);\n    break;\n    case \"PSI\":\n        ui_control.max = 40;\n        ui_control.seg1 = 14.5;\n        ui_control.seg2 = 29.0;\n        flow.set('pressure_label', \"psi\");\n        flow.set('pressure_decimals', 1);\n    break;\n    case \"KPA\":\n        ui_control.max = 300;\n        ui_control.seg1 = 100;\n        ui_control.seg2 = 200;\n        flow.set('pressure_label', \"kPa\");\n        flow.set('pressure_decimals', 0);\n    break;\n}\n\nmsg = {};\nmsg.ui_control = ui_control;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 920,
+        "y": 380,
+        "wires": [
+            [
+                "f9e1faeb.119d68"
+            ]
+        ]
+    },
+    {
+        "id": "ae533b1f.9a4388",
+        "type": "debug",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1110,
+        "y": 260,
+        "wires": []
+    }
+]
