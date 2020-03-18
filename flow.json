@@ -145,6 +145,28 @@
         "collapse": false
     },
     {
+        "id": "39f896d0.3d2ada",
+        "type": "ui_group",
+        "z": "",
+        "name": "System",
+        "tab": "3d3cdbae.9df2c4",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "674ed6bb.fb7448",
+        "type": "ui_group",
+        "z": "",
+        "name": "Debug",
+        "tab": "6718eaff.5cc0c4",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
         "id": "5757e3d3.7b8f1c",
         "type": "inject",
         "z": "b43ac849.4051e",
@@ -169,8 +191,8 @@
         "id": "f064e597.cce9d8",
         "type": "i2c scan",
         "z": "b43ac849.4051e",
-        "x": 340,
-        "y": 120,
+        "x": 280,
+        "y": 80,
         "wires": [
             [],
             [
@@ -188,8 +210,8 @@
         "payload": "-32",
         "payloadType": "num",
         "count": "1",
-        "x": 580,
-        "y": 140,
+        "x": 480,
+        "y": 80,
         "wires": [
             [
                 "176e31df.f5048e"
@@ -207,8 +229,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 770,
-        "y": 140,
+        "x": 670,
+        "y": 80,
         "wires": []
     },
     {
@@ -217,8 +239,8 @@
         "z": "b43ac849.4051e",
         "name": "",
         "info": "0xE0 (-32) enables automatic conversion @Tx2048 which provides 0,4 ksps",
-        "x": 540,
-        "y": 180,
+        "x": 440,
+        "y": 120,
         "wires": []
     },
     {
@@ -295,7 +317,7 @@
         "z": "b43ac849.4051e",
         "name": "",
         "group": "cf35c896.375ae8",
-        "order": 0,
+        "order": 1,
         "width": 0,
         "height": 0,
         "gtype": "gage",
@@ -311,8 +333,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 1140,
-        "y": 320,
+        "x": 1220,
+        "y": 380,
         "wires": []
     },
     {
@@ -320,22 +342,22 @@
         "type": "ui_chart",
         "z": "b43ac849.4051e",
         "name": "",
-        "group": "cf35c896.375ae8",
+        "group": "674ed6bb.fb7448",
         "order": 1,
         "width": 0,
         "height": 0,
         "label": "chart",
         "chartType": "line",
         "legend": "false",
-        "xformat": "HH:mm:ss",
+        "xformat": "mm:ss",
         "interpolate": "linear",
         "nodata": "No data to display",
         "dot": false,
         "ymin": "2000",
         "ymax": "2100",
-        "removeOlder": 1,
+        "removeOlder": "5",
         "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
+        "removeOlderUnit": "60",
         "cutout": 0,
         "useOneColor": false,
         "colors": [
@@ -351,8 +373,8 @@
         ],
         "useOldStyle": false,
         "outputs": 1,
-        "x": 1090,
-        "y": 220,
+        "x": 1470,
+        "y": 160,
         "wires": [
             []
         ]
@@ -383,11 +405,13 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 880,
-        "y": 260,
+        "x": 920,
+        "y": 220,
         "wires": [
             [
-                "bfe4be57.d9a"
+                "bfe4be57.d9a",
+                "2158fa24.debb06",
+                "9e8ebbf2.8b8a68"
             ]
         ]
     },
@@ -448,7 +472,7 @@
         "name": "",
         "property": "raw_adc",
         "action": "low",
-        "count": "8",
+        "count": "4",
         "round": "0",
         "mult": "single",
         "reduce": false,
@@ -457,7 +481,9 @@
         "wires": [
             [
                 "c8026dfb.e7aa5",
-                "6e1be725.32a228"
+                "6e1be725.32a228",
+                "7180e201.f0bc3c",
+                "1e90a639.70607a"
             ]
         ]
     },
@@ -676,10 +702,10 @@
         "type": "function",
         "z": "b43ac849.4051e",
         "name": "calculate pressure",
-        "func": "var pressure = (msg.raw_adc * flow.get('sensor_range')) / (4095.0 * flow.get('pressure_conversion'));\n\nmsg.pressure = pressure;\nmsg.payload = pressure.toFixed(flow.get('pressure_decimals'));\nmsg.pressure_label = flow.get('pressure_label');\n\n\nreturn msg;",
+        "func": "var pressure = (msg.raw_adc * flow.get('sensor_range')) / (4095.0 * flow.get('pressure_conversion'));\n\nmsg.pressure = pressure;\nmsg.payload = pressure.toFixed(flow.get('pressure_decimals'));\nmsg.pressure_label = flow.get('pressure_label');\nmsg.pressure_unit = flow.get('pressure_unit');\n\nflow.set('pressure', pressure);\nflow.set('raw_adc', raw_adc);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 890,
+        "x": 930,
         "y": 300,
         "wires": [
             [
@@ -715,8 +741,276 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1110,
-        "y": 260,
+        "x": 1170,
+        "y": 320,
         "wires": []
+    },
+    {
+        "id": "ee91c2e2.5db18",
+        "type": "ui_button",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "group": "39f896d0.3d2ada",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Shutdown",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "shutdown",
+        "payloadType": "str",
+        "topic": "",
+        "x": 290,
+        "y": 900,
+        "wires": [
+            [
+                "63785b9c.88bfc4"
+            ]
+        ]
+    },
+    {
+        "id": "63785b9c.88bfc4",
+        "type": "exec",
+        "z": "b43ac849.4051e",
+        "command": "sudo shutdown",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "shutdown",
+        "x": 470,
+        "y": 900,
+        "wires": [
+            [
+                "85393da0.c1ef3"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "85393da0.c1ef3",
+        "type": "ui_toast",
+        "z": "b43ac849.4051e",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 750,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "da16a8c9.ba1f48",
+        "type": "ui_button",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "group": "39f896d0.3d2ada",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Restart",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "Restart",
+        "payloadType": "str",
+        "topic": "",
+        "x": 280,
+        "y": 980,
+        "wires": [
+            [
+                "3fca8ce6.d02364"
+            ]
+        ]
+    },
+    {
+        "id": "3fca8ce6.d02364",
+        "type": "exec",
+        "z": "b43ac849.4051e",
+        "command": "sudo reboot",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "reboot",
+        "x": 460,
+        "y": 980,
+        "wires": [
+            [
+                "85393da0.c1ef3"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7180e201.f0bc3c",
+        "type": "smooth",
+        "z": "b43ac849.4051e",
+        "name": "max",
+        "property": "raw_adc",
+        "action": "max",
+        "count": "300",
+        "round": "",
+        "mult": "single",
+        "reduce": false,
+        "x": 890,
+        "y": 140,
+        "wires": [
+            [
+                "e8639fa.477ef6"
+            ]
+        ]
+    },
+    {
+        "id": "1e90a639.70607a",
+        "type": "smooth",
+        "z": "b43ac849.4051e",
+        "name": "min",
+        "property": "raw_adc",
+        "action": "min",
+        "count": "300",
+        "round": "",
+        "mult": "single",
+        "reduce": false,
+        "x": 890,
+        "y": 180,
+        "wires": [
+            [
+                "8fc3c3ff.1a957"
+            ]
+        ]
+    },
+    {
+        "id": "e8639fa.477ef6",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "max",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 140,
+        "wires": [
+            [
+                "8a51e870.331958"
+            ]
+        ]
+    },
+    {
+        "id": "8a51e870.331958",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "set min/max",
+        "func": "var ui_control = {};\n\nswitch(msg.topic) {\n    case \"max\":\n        context.set('max', msg.raw_adc);\n    break;\n    case \"min\":\n        context.set('min', msg.raw_adc);\n    break;\n}\n\nui_control.ymin = context.get('min');\nui_control.ymax = context.get('max');\n\nmsg = {};\nmsg.ui_control = ui_control;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1290,
+        "y": 140,
+        "wires": [
+            [
+                "bfe4be57.d9a"
+            ]
+        ]
+    },
+    {
+        "id": "8fc3c3ff.1a957",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "min",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 180,
+        "wires": [
+            [
+                "8a51e870.331958"
+            ]
+        ]
+    },
+    {
+        "id": "2158fa24.debb06",
+        "type": "ui_text",
+        "z": "b43ac849.4051e",
+        "group": "674ed6bb.fb7448",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "ADC:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1470,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "83ce363b.625888",
+        "type": "ui_text",
+        "z": "b43ac849.4051e",
+        "group": "674ed6bb.fb7448",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Voltage",
+        "format": "{{msg.payload}} Vdc",
+        "layout": "row-spread",
+        "x": 1480,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "9e8ebbf2.8b8a68",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "calc voltage",
+        "func": "var voltage = (msg.raw_adc * 5.0) / 4095.0;\nmsg.payload = voltage.toFixed(3);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1290,
+        "y": 240,
+        "wires": [
+            [
+                "83ce363b.625888"
+            ]
+        ]
     }
 ]
