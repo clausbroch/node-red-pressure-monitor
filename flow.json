@@ -178,12 +178,12 @@
         "crontab": "",
         "once": true,
         "onceDelay": 0.1,
-        "x": 110,
-        "y": 120,
+        "x": 130,
+        "y": 60,
         "wires": [
             [
-                "f064e597.cce9d8",
-                "bea0e5c3.54df78"
+                "db3679e2.e9d4e8",
+                "d7a02044.b13cc"
             ]
         ]
     },
@@ -191,13 +191,13 @@
         "id": "f064e597.cce9d8",
         "type": "i2c scan",
         "z": "b43ac849.4051e",
-        "x": 280,
-        "y": 80,
+        "x": 520,
+        "y": 60,
         "wires": [
-            [],
             [
-                "46c82397.265dcc"
-            ]
+                "f865f012.46eb3"
+            ],
+            []
         ]
     },
     {
@@ -210,8 +210,8 @@
         "payload": "-32",
         "payloadType": "num",
         "count": "1",
-        "x": 480,
-        "y": 80,
+        "x": 920,
+        "y": 60,
         "wires": [
             [
                 "176e31df.f5048e"
@@ -223,14 +223,14 @@
         "type": "debug",
         "z": "b43ac849.4051e",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "x": 670,
-        "y": 80,
+        "complete": "address",
+        "targetType": "msg",
+        "x": 1130,
+        "y": 60,
         "wires": []
     },
     {
@@ -239,8 +239,8 @@
         "z": "b43ac849.4051e",
         "name": "",
         "info": "0xE0 (-32) enables automatic conversion @Tx2048 which provides 0,4 ksps",
-        "x": 440,
-        "y": 120,
+        "x": 920,
+        "y": 20,
         "wires": []
     },
     {
@@ -256,10 +256,10 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 130,
-        "y": 260,
+        "y": 300,
         "wires": [
             [
-                "f723afc5.d68d2"
+                "547d0167.90e0b"
             ]
         ]
     },
@@ -268,31 +268,16 @@
         "type": "i2c in",
         "z": "b43ac849.4051e",
         "name": "Read binary value",
-        "address": "80",
+        "address": "",
         "command": "0",
         "count": "2",
-        "x": 310,
-        "y": 260,
+        "x": 650,
+        "y": 300,
         "wires": [
             [
                 "3781f075.d0f51"
             ]
         ]
-    },
-    {
-        "id": "dadb0a58.4f7db8",
-        "type": "debug",
-        "z": "b43ac849.4051e",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "x": 690,
-        "y": 220,
-        "wires": []
     },
     {
         "id": "3781f075.d0f51",
@@ -302,11 +287,10 @@
         "func": "var raw_adc = (msg.payload[0] & 0x0F) * 256 + msg.payload[1];\nmsg.raw_adc = raw_adc;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 500,
-        "y": 260,
+        "x": 840,
+        "y": 300,
         "wires": [
             [
-                "dadb0a58.4f7db8",
                 "7eb58181.ad997"
             ]
         ]
@@ -333,7 +317,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 1220,
+        "x": 1580,
         "y": 380,
         "wires": []
     },
@@ -373,7 +357,7 @@
         ],
         "useOldStyle": false,
         "outputs": 1,
-        "x": 1470,
+        "x": 1830,
         "y": 160,
         "wires": [
             []
@@ -405,7 +389,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 920,
+        "x": 1280,
         "y": 220,
         "wires": [
             [
@@ -431,39 +415,24 @@
         "options": [
             {
                 "label": "0 - 5 Bar",
-                "value": 500000,
-                "type": "num"
+                "value": "0to5_bar",
+                "type": "str"
             },
             {
                 "label": "0 - 12 Bar",
-                "value": "1200000",
+                "value": "0to12_bar",
                 "type": "str"
             }
         ],
         "payload": "",
         "topic": "",
-        "x": 290,
-        "y": 460,
+        "x": 490,
+        "y": 440,
         "wires": [
             [
-                "5d41d488.7ea84c"
+                "4425c386.d6905c"
             ]
         ]
-    },
-    {
-        "id": "e92acd6a.84c0b",
-        "type": "debug",
-        "z": "b43ac849.4051e",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "x": 650,
-        "y": 400,
-        "wires": []
     },
     {
         "id": "7eb58181.ad997",
@@ -476,41 +445,14 @@
         "round": "0",
         "mult": "single",
         "reduce": false,
-        "x": 700,
-        "y": 260,
+        "x": 1020,
+        "y": 300,
         "wires": [
             [
                 "c8026dfb.e7aa5",
                 "6e1be725.32a228",
                 "7180e201.f0bc3c",
                 "1e90a639.70607a"
-            ]
-        ]
-    },
-    {
-        "id": "5d41d488.7ea84c",
-        "type": "change",
-        "z": "b43ac849.4051e",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "sensor_range",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 500,
-        "y": 460,
-        "wires": [
-            [
-                "e92acd6a.84c0b"
             ]
         ]
     },
@@ -530,24 +472,24 @@
         "options": [
             {
                 "label": "Bar",
-                "value": 100000,
-                "type": "num"
+                "value": "BAR",
+                "type": "str"
             },
             {
-                "label": "PSI",
-                "value": "6895",
+                "label": "psi",
+                "value": "PSI",
                 "type": "str"
             },
             {
                 "label": "kPa",
-                "value": "1000",
+                "value": "KPA",
                 "type": "str"
             }
         ],
         "payload": "",
         "topic": "",
-        "x": 290,
-        "y": 520,
+        "x": 490,
+        "y": 500,
         "wires": [
             [
                 "1f3ed97a.a6aae7"
@@ -580,8 +522,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 650,
-        "y": 500,
+        "x": 850,
+        "y": 480,
         "wires": [
             [
                 "bea0e5c3.54df78"
@@ -598,25 +540,25 @@
         "rules": [
             {
                 "t": "eq",
-                "v": "100000",
-                "vt": "num"
+                "v": "BAR",
+                "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "6895",
-                "vt": "num"
+                "v": "PSI",
+                "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "1000",
-                "vt": "num"
+                "v": "KPA",
+                "vt": "str"
             }
         ],
         "checkall": "false",
         "repair": false,
         "outputs": 3,
-        "x": 450,
-        "y": 520,
+        "x": 650,
+        "y": 500,
         "wires": [
             [
                 "584cafc1.5ae0a"
@@ -655,8 +597,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 650,
-        "y": 540,
+        "x": 850,
+        "y": 520,
         "wires": [
             [
                 "bea0e5c3.54df78"
@@ -689,8 +631,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 650,
-        "y": 580,
+        "x": 850,
+        "y": 560,
         "wires": [
             [
                 "bea0e5c3.54df78"
@@ -702,10 +644,10 @@
         "type": "function",
         "z": "b43ac849.4051e",
         "name": "calculate pressure",
-        "func": "var adc_zero_offset = flow.get('adc_zero_offset') || 0;\nvar raw_adc = msg.raw_adc;\nvar pressure = ((raw_adc - adc_zero_offset) * flow.get('sensor_range')) / (4095.0 * flow.get('pressure_conversion'));\n\nmsg.pressure = pressure;\nmsg.payload = pressure.toFixed(flow.get('pressure_decimals'));\nmsg.pressure_label = flow.get('pressure_label');\nmsg.pressure_unit = flow.get('pressure_unit');\n\nflow.set('pressure', pressure);\nflow.set('raw_adc', raw_adc);\n\nreturn msg;",
+        "func": "var adc_zero_offset = flow.get('adc_zero_offset') || 0;\nvar sensor_min_adc = flow.get('sensor_min_adc') || 0;\nvar sensor_max_adc = flow.get('sensor_max_adc') || 4095;\nvar raw_adc = msg.raw_adc;\nvar pressure = ((raw_adc + adc_zero_offset - sensor_min_adc) * flow.get('sensor_range')) / ((sensor_max_adc - sensor_min_adc) * flow.get('pressure_conversion'));\n\nmsg.pressure = pressure;\nmsg.payload = pressure.toFixed(flow.get('pressure_decimals'));\nmsg.pressure_label = flow.get('pressure_label');\nmsg.pressure_unit = flow.get('pressure_unit');\n\nflow.set('pressure', pressure);\nflow.set('raw_adc', raw_adc);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 930,
+        "x": 1290,
         "y": 300,
         "wires": [
             [
@@ -722,7 +664,7 @@
         "func": "var ui_control = {};\n\nui_control.min = 0;\n\nswitch(flow.get('pressure_unit')) {\n    default:\n    case \"BAR\":\n        ui_control.max = 3;\n        ui_control.seg1 = 1;\n        ui_control.seg2 = 2;\n        flow.set('pressure_label', \"Bar\");\n        flow.set('pressure_decimals', 2);\n    break;\n    case \"PSI\":\n        ui_control.max = 40;\n        ui_control.seg1 = 14.5;\n        ui_control.seg2 = 29.0;\n        flow.set('pressure_label', \"psi\");\n        flow.set('pressure_decimals', 1);\n    break;\n    case \"KPA\":\n        ui_control.max = 300;\n        ui_control.seg1 = 100;\n        ui_control.seg2 = 200;\n        flow.set('pressure_label', \"kPa\");\n        flow.set('pressure_decimals', 0);\n    break;\n}\n\nmsg = {};\nmsg.ui_control = ui_control;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 920,
+        "x": 1280,
         "y": 380,
         "wires": [
             [
@@ -741,8 +683,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1170,
-        "y": 320,
+        "x": 1530,
+        "y": 300,
         "wires": []
     },
     {
@@ -868,7 +810,7 @@
         "round": "",
         "mult": "single",
         "reduce": false,
-        "x": 890,
+        "x": 1250,
         "y": 140,
         "wires": [
             [
@@ -887,7 +829,7 @@
         "round": "",
         "mult": "single",
         "reduce": false,
-        "x": 890,
+        "x": 1250,
         "y": 180,
         "wires": [
             [
@@ -914,7 +856,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1060,
+        "x": 1420,
         "y": 140,
         "wires": [
             [
@@ -930,7 +872,7 @@
         "func": "var ui_control = {};\n\nswitch(msg.topic) {\n    case \"max\":\n        context.set('max', msg.raw_adc);\n    break;\n    case \"min\":\n        context.set('min', msg.raw_adc);\n    break;\n}\n\nui_control.ymin = context.get('min');\nui_control.ymax = context.get('max');\n\nmsg = {};\nmsg.ui_control = ui_control;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1290,
+        "x": 1650,
         "y": 140,
         "wires": [
             [
@@ -957,7 +899,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1060,
+        "x": 1420,
         "y": 180,
         "wires": [
             [
@@ -977,7 +919,7 @@
         "label": "ADC:",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
-        "x": 1470,
+        "x": 1830,
         "y": 200,
         "wires": []
     },
@@ -993,7 +935,7 @@
         "label": "Voltage",
         "format": "{{msg.payload}} Vdc",
         "layout": "row-spread",
-        "x": 1480,
+        "x": 1840,
         "y": 240,
         "wires": []
     },
@@ -1005,7 +947,7 @@
         "func": "var voltage = (msg.raw_adc * 5.0) / 4095.0;\nmsg.payload = voltage.toFixed(3);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1290,
+        "x": 1650,
         "y": 240,
         "wires": [
             [
@@ -1019,11 +961,11 @@
         "z": "b43ac849.4051e",
         "name": "",
         "group": "7df1b373.39877c",
-        "order": 3,
+        "order": 5,
         "width": 0,
         "height": 0,
         "passthru": false,
-        "label": "Calibrate Offset",
+        "label": "Set Zero Pressure",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
@@ -1031,7 +973,7 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 300,
+        "x": 310,
         "y": 700,
         "wires": [
             [
@@ -1044,7 +986,7 @@
         "type": "function",
         "z": "b43ac849.4051e",
         "name": "set zero offset",
-        "func": "var adc_zero_offset = flow.get('raw_adc');\nflow.set('adc_zero_offset', adc_zero_offset);\nreturn msg;",
+        "func": "var raw_adc = flow.get('raw_adc') || 0;\nvar sensor_min_adc = flow.get('sensor_min_adc') || 0;\nvar adc_zero_offset = sensor_min_adc - raw_adc;\nflow.set('adc_zero_offset', adc_zero_offset);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 530,
@@ -1052,5 +994,198 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "db3679e2.e9d4e8",
+        "type": "delay",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 360,
+        "y": 60,
+        "wires": [
+            [
+                "f064e597.cce9d8"
+            ]
+        ]
+    },
+    {
+        "id": "f865f012.46eb3",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "get i2c address",
+        "func": "var adc_i2c_addr = msg.payload[0] || 0;\n\nflow.set('adc_i2c_addr', adc_i2c_addr);\nmsg.address = adc_i2c_addr;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 700,
+        "y": 60,
+        "wires": [
+            [
+                "46c82397.265dcc"
+            ]
+        ]
+    },
+    {
+        "id": "547d0167.90e0b",
+        "type": "switch",
+        "z": "b43ac849.4051e",
+        "name": "adc found?",
+        "property": "adc_i2c_addr",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 270,
+        "y": 300,
+        "wires": [
+            [
+                "4679bd83.a775f4"
+            ]
+        ]
+    },
+    {
+        "id": "4679bd83.a775f4",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "address",
+                "pt": "msg",
+                "to": "adc_i2c_addr",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 300,
+        "wires": [
+            [
+                "f723afc5.d68d2"
+            ]
+        ]
+    },
+    {
+        "id": "d7a02044.b13cc",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "set defaults",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('sensor_type', '0to5_bar');\n    flow.set('pressure_unit', 'BAR');\n    flow.set('defaults_set', true);\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 130,
+        "y": 360,
+        "wires": [
+            [
+                "bea0e5c3.54df78",
+                "e6ad8f78.9fce7",
+                "d2e4e48f.bb32c8"
+            ]
+        ]
+    },
+    {
+        "id": "4425c386.d6905c",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "set sensor parameters",
+        "func": "switch(msg.payload) {\n    default:\n    case \"0to5_bar\":\n        // Pressure range: 0-0.5 MPa, Output Voltage: 0.5-4.5V DC\n        flow.set('sensor_range', 500000);\n        flow.set('sensor_min_adc', 410);\n        flow.set('sensor_max_adc', 3686);\n    break;\n    case \"0to12_bar\":\n        // Pressure range: 0-1.2 MPa, Output Voltage: 0.5-4.5V DC\n        flow.set('sensor_range', 1200000);\n        flow.set('sensor_min_adc', 410);\n        flow.set('sensor_max_adc', 3686);\n    break;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 720,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e6ad8f78.9fce7",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "sensor_type",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 440,
+        "wires": [
+            [
+                "bede8be4.54de28"
+            ]
+        ]
+    },
+    {
+        "id": "d2e4e48f.bb32c8",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "pressure_unit",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 500,
+        "wires": [
+            [
+                "65bef1f9.9d9b9"
+            ]
+        ]
+    },
+    {
+        "id": "9953f0e1.c94d5",
+        "type": "ui_text",
+        "z": "b43ac849.4051e",
+        "group": "7df1b373.39877c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "Calibration header",
+        "label": "-- Calibration --",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "x": 320,
+        "y": 620,
+        "wires": []
     }
 ]
