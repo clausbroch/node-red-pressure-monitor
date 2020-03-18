@@ -424,7 +424,7 @@
         "tooltip": "",
         "place": "Select option",
         "group": "7df1b373.39877c",
-        "order": 0,
+        "order": 2,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -702,7 +702,7 @@
         "type": "function",
         "z": "b43ac849.4051e",
         "name": "calculate pressure",
-        "func": "var pressure = (msg.raw_adc * flow.get('sensor_range')) / (4095.0 * flow.get('pressure_conversion'));\n\nmsg.pressure = pressure;\nmsg.payload = pressure.toFixed(flow.get('pressure_decimals'));\nmsg.pressure_label = flow.get('pressure_label');\nmsg.pressure_unit = flow.get('pressure_unit');\n\nflow.set('pressure', pressure);\nflow.set('raw_adc', raw_adc);\n\nreturn msg;",
+        "func": "var adc_zero_offset = flow.get('adc_zero_offset') || 0;\nvar raw_adc = msg.raw_adc;\nvar pressure = ((raw_adc - adc_zero_offset) * flow.get('sensor_range')) / (4095.0 * flow.get('pressure_conversion'));\n\nmsg.pressure = pressure;\nmsg.payload = pressure.toFixed(flow.get('pressure_decimals'));\nmsg.pressure_label = flow.get('pressure_label');\nmsg.pressure_unit = flow.get('pressure_unit');\n\nflow.set('pressure', pressure);\nflow.set('raw_adc', raw_adc);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 930,
@@ -1011,6 +1011,46 @@
             [
                 "83ce363b.625888"
             ]
+        ]
+    },
+    {
+        "id": "f51459ea.544a48",
+        "type": "ui_button",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "group": "7df1b373.39877c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Calibrate Offset",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 300,
+        "y": 700,
+        "wires": [
+            [
+                "191ab2ca.91ee9d"
+            ]
+        ]
+    },
+    {
+        "id": "191ab2ca.91ee9d",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "set zero offset",
+        "func": "var adc_zero_offset = flow.get('raw_adc');\nflow.set('adc_zero_offset', adc_zero_offset);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 700,
+        "wires": [
+            []
         ]
     }
 ]
