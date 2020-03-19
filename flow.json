@@ -150,7 +150,7 @@
         "z": "",
         "name": "System",
         "tab": "3d3cdbae.9df2c4",
-        "order": 2,
+        "order": 3,
         "disp": true,
         "width": "6",
         "collapse": false
@@ -161,6 +161,17 @@
         "z": "",
         "name": "Debug",
         "tab": "6718eaff.5cc0c4",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "4435e6b8.8f7528",
+        "type": "ui_group",
+        "z": "",
+        "name": "Cloud Settings",
+        "tab": "3d3cdbae.9df2c4",
         "order": 2,
         "disp": true,
         "width": "6",
@@ -247,10 +258,10 @@
         "id": "59d64ad1.5ef994",
         "type": "inject",
         "z": "b43ac849.4051e",
-        "name": "",
+        "name": "Read",
         "topic": "",
-        "payload": "read",
-        "payloadType": "str",
+        "payload": "",
+        "payloadType": "date",
         "repeat": "1",
         "crontab": "",
         "once": false,
@@ -305,7 +316,7 @@
         "width": 0,
         "height": 0,
         "gtype": "gage",
-        "title": "Pressure",
+        "title": "{{msg.devicename}}",
         "label": "{{msg.pressure_label}}",
         "format": "{{msg.payload}}",
         "min": 0,
@@ -317,7 +328,7 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 1580,
+        "x": 1570,
         "y": 380,
         "wires": []
     },
@@ -339,7 +350,7 @@
         "dot": false,
         "ymin": "2000",
         "ymax": "2100",
-        "removeOlder": "5",
+        "removeOlder": "10",
         "removeOlderPoints": "",
         "removeOlderUnit": "60",
         "cutout": 0,
@@ -408,7 +419,7 @@
         "tooltip": "",
         "place": "Select option",
         "group": "7df1b373.39877c",
-        "order": 2,
+        "order": 3,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -426,8 +437,8 @@
         ],
         "payload": "",
         "topic": "",
-        "x": 490,
-        "y": 440,
+        "x": 550,
+        "y": 480,
         "wires": [
             [
                 "4425c386.d6905c"
@@ -465,7 +476,7 @@
         "tooltip": "",
         "place": "Select option",
         "group": "7df1b373.39877c",
-        "order": 1,
+        "order": 2,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -488,8 +499,8 @@
         ],
         "payload": "",
         "topic": "",
-        "x": 490,
-        "y": 500,
+        "x": 550,
+        "y": 540,
         "wires": [
             [
                 "1f3ed97a.a6aae7"
@@ -522,8 +533,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 850,
-        "y": 480,
+        "x": 910,
+        "y": 520,
         "wires": [
             [
                 "bea0e5c3.54df78"
@@ -557,8 +568,8 @@
         "checkall": "false",
         "repair": false,
         "outputs": 3,
-        "x": 650,
-        "y": 500,
+        "x": 710,
+        "y": 540,
         "wires": [
             [
                 "584cafc1.5ae0a"
@@ -597,8 +608,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 850,
-        "y": 520,
+        "x": 910,
+        "y": 560,
         "wires": [
             [
                 "bea0e5c3.54df78"
@@ -631,8 +642,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 850,
-        "y": 560,
+        "x": 910,
+        "y": 600,
         "wires": [
             [
                 "bea0e5c3.54df78"
@@ -644,7 +655,7 @@
         "type": "function",
         "z": "b43ac849.4051e",
         "name": "calculate pressure",
-        "func": "var adc_zero_offset = flow.get('adc_zero_offset') || 0;\nvar sensor_min_adc = flow.get('sensor_min_adc') || 0;\nvar sensor_max_adc = flow.get('sensor_max_adc') || 4095;\nvar raw_adc = msg.raw_adc;\nvar pressure = ((raw_adc + adc_zero_offset - sensor_min_adc) * flow.get('sensor_range')) / ((sensor_max_adc - sensor_min_adc) * flow.get('pressure_conversion'));\n\nmsg.pressure = pressure;\nmsg.payload = pressure.toFixed(flow.get('pressure_decimals'));\nmsg.pressure_label = flow.get('pressure_label');\nmsg.pressure_unit = flow.get('pressure_unit');\n\nflow.set('pressure', pressure);\nflow.set('raw_adc', raw_adc);\n\nreturn msg;",
+        "func": "var adc_zero_offset = flow.get('adc_zero_offset') || 0;\nvar sensor_min_adc = flow.get('sensor_min_adc') || 0;\nvar sensor_max_adc = flow.get('sensor_max_adc') || 4095;\nvar raw_adc = msg.raw_adc;\nvar pressure = ((raw_adc + adc_zero_offset - sensor_min_adc) * flow.get('sensor_range')) / ((sensor_max_adc - sensor_min_adc) * flow.get('pressure_conversion'));\n\nmsg.pressure = pressure;\nmsg.payload = pressure.toFixed(flow.get('pressure_decimals'));\nmsg.devicename = flow.get('devicename');\nmsg.pressure_label = flow.get('pressure_label');\nmsg.pressure_unit = flow.get('pressure_unit');\n\nflow.set('pressure', pressure);\nflow.set('raw_adc', raw_adc);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 1290,
@@ -652,7 +663,8 @@
         "wires": [
             [
                 "f9e1faeb.119d68",
-                "ae533b1f.9a4388"
+                "ae533b1f.9a4388",
+                "8e0163ae.a8aa8"
             ]
         ]
     },
@@ -661,7 +673,7 @@
         "type": "function",
         "z": "b43ac849.4051e",
         "name": "configure gauge",
-        "func": "var ui_control = {};\n\nui_control.min = 0;\n\nswitch(flow.get('pressure_unit')) {\n    default:\n    case \"BAR\":\n        ui_control.max = 3;\n        ui_control.seg1 = 1;\n        ui_control.seg2 = 2;\n        flow.set('pressure_label', \"Bar\");\n        flow.set('pressure_decimals', 2);\n    break;\n    case \"PSI\":\n        ui_control.max = 40;\n        ui_control.seg1 = 14.5;\n        ui_control.seg2 = 29.0;\n        flow.set('pressure_label', \"psi\");\n        flow.set('pressure_decimals', 1);\n    break;\n    case \"KPA\":\n        ui_control.max = 300;\n        ui_control.seg1 = 100;\n        ui_control.seg2 = 200;\n        flow.set('pressure_label', \"kPa\");\n        flow.set('pressure_decimals', 0);\n    break;\n}\n\nmsg = {};\nmsg.ui_control = ui_control;\nreturn msg;",
+        "func": "var ui_control = {};\nvar pressure_label;\nvar pressure_decimals;\nui_control.min = 0;\n\nswitch(flow.get('pressure_unit')) {\n    default:\n    case \"BAR\":\n        ui_control.max = 3;\n        ui_control.seg1 = 1;\n        ui_control.seg2 = 2;\n        pressure_label = \"Bar\";\n        pressure_decimals = 2;\n    break;\n    case \"PSI\":\n        ui_control.max = 40;\n        ui_control.seg1 = 14.5;\n        ui_control.seg2 = 29.0;\n        pressure_label = \"psi\";\n        pressure_decimals = 1;\n    break;\n    case \"KPA\":\n        ui_control.max = 300;\n        ui_control.seg1 = 100;\n        ui_control.seg2 = 200;\n        pressure_label = \"kPa\";\n        pressure_decimals = 0;\n    break;\n}\n        \nflow.set('pressure_label', pressure_label);\nflow.set('pressure_decimals', pressure_decimals);\n\nmsg = {};\nmsg.pressure_label = pressure_label;\nmsg.ui_control = ui_control;\nmsg.devicename = flow.get('devicename');\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 1280,
@@ -683,8 +695,8 @@
         "tostatus": false,
         "complete": "true",
         "targetType": "full",
-        "x": 1530,
-        "y": 300,
+        "x": 1490,
+        "y": 260,
         "wires": []
     },
     {
@@ -706,7 +718,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 290,
-        "y": 900,
+        "y": 1240,
         "wires": [
             [
                 "63785b9c.88bfc4"
@@ -725,7 +737,7 @@
         "oldrc": false,
         "name": "shutdown",
         "x": 470,
-        "y": 900,
+        "y": 1240,
         "wires": [
             [
                 "85393da0.c1ef3"
@@ -749,7 +761,7 @@
         "topic": "",
         "name": "",
         "x": 750,
-        "y": 940,
+        "y": 1280,
         "wires": []
     },
     {
@@ -771,7 +783,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 280,
-        "y": 980,
+        "y": 1320,
         "wires": [
             [
                 "3fca8ce6.d02364"
@@ -790,7 +802,7 @@
         "oldrc": false,
         "name": "reboot",
         "x": 460,
-        "y": 980,
+        "y": 1320,
         "wires": [
             [
                 "85393da0.c1ef3"
@@ -806,7 +818,7 @@
         "name": "max",
         "property": "raw_adc",
         "action": "max",
-        "count": "300",
+        "count": "600",
         "round": "",
         "mult": "single",
         "reduce": false,
@@ -825,7 +837,7 @@
         "name": "min",
         "property": "raw_adc",
         "action": "min",
-        "count": "300",
+        "count": "600",
         "round": "",
         "mult": "single",
         "reduce": false,
@@ -965,7 +977,7 @@
         "width": 0,
         "height": 0,
         "passthru": false,
-        "label": "Set Zero Pressure",
+        "label": "Calibrate to Zero Pressure",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
@@ -973,8 +985,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 310,
-        "y": 700,
+        "x": 380,
+        "y": 660,
         "wires": [
             [
                 "191ab2ca.91ee9d"
@@ -989,8 +1001,8 @@
         "func": "var raw_adc = flow.get('raw_adc') || 0;\nvar sensor_min_adc = flow.get('sensor_min_adc') || 0;\nvar adc_zero_offset = sensor_min_adc - raw_adc;\nflow.set('adc_zero_offset', adc_zero_offset);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 530,
-        "y": 700,
+        "x": 570,
+        "y": 660,
         "wires": [
             []
         ]
@@ -1071,6 +1083,13 @@
                 "pt": "msg",
                 "to": "adc_i2c_addr",
                 "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "timestamp",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
             }
         ],
         "action": "",
@@ -1078,7 +1097,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 450,
+        "x": 440,
         "y": 300,
         "wires": [
             [
@@ -1091,7 +1110,7 @@
         "type": "function",
         "z": "b43ac849.4051e",
         "name": "set defaults",
-        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('sensor_type', '0to5_bar');\n    flow.set('pressure_unit', 'BAR');\n    flow.set('defaults_set', true);\n}\nreturn msg;",
+        "func": "var defaults_set = flow.get('defaults_set') || false;\nif(defaults_set === false) {\n    flow.set('sensor_type', '0to5_bar');\n    flow.set('pressure_unit', 'BAR');\n    flow.set('defaults_set', true);\n    flow.set('cloud_logging_url', \"\");\n    flow.set('log_to_cloud', false);\n    flow.set('cloud_logging_interval',15);\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 130,
@@ -1100,7 +1119,11 @@
             [
                 "bea0e5c3.54df78",
                 "e6ad8f78.9fce7",
-                "d2e4e48f.bb32c8"
+                "d2e4e48f.bb32c8",
+                "53f0f706.16b848",
+                "ae4e9e4a.f1abb",
+                "eec5672.3b26398",
+                "dae9f89f.cc68c8"
             ]
         ]
     },
@@ -1112,8 +1135,8 @@
         "func": "switch(msg.payload) {\n    default:\n    case \"0to5_bar\":\n        // Pressure range: 0-0.5 MPa, Output Voltage: 0.5-4.5V DC\n        flow.set('sensor_range', 500000);\n        flow.set('sensor_min_adc', 410);\n        flow.set('sensor_max_adc', 3686);\n    break;\n    case \"0to12_bar\":\n        // Pressure range: 0-1.2 MPa, Output Voltage: 0.5-4.5V DC\n        flow.set('sensor_range', 1200000);\n        flow.set('sensor_min_adc', 410);\n        flow.set('sensor_max_adc', 3686);\n    break;\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 720,
-        "y": 440,
+        "x": 780,
+        "y": 480,
         "wires": [
             []
         ]
@@ -1137,8 +1160,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 300,
-        "y": 440,
+        "x": 360,
+        "y": 480,
         "wires": [
             [
                 "bede8be4.54de28"
@@ -1164,8 +1187,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 300,
-        "y": 500,
+        "x": 360,
+        "y": 540,
         "wires": [
             [
                 "65bef1f9.9d9b9"
@@ -1173,19 +1196,421 @@
         ]
     },
     {
-        "id": "9953f0e1.c94d5",
+        "id": "c0b463f5.c78e8",
+        "type": "ui_text_input",
+        "z": "b43ac849.4051e",
+        "name": "Cloud URL",
+        "label": "Cloud URL [use RETURN to save]",
+        "tooltip": "",
+        "group": "4435e6b8.8f7528",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 530,
+        "y": 780,
+        "wires": [
+            [
+                "322a0dee.fa0922"
+            ]
+        ]
+    },
+    {
+        "id": "828b9ff1.ff817",
+        "type": "ui_switch",
+        "z": "b43ac849.4051e",
+        "name": "Start Logging to the Cloud",
+        "label": "Start Logging to the Cloud",
+        "tooltip": "",
+        "group": "4435e6b8.8f7528",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 580,
+        "y": 840,
+        "wires": [
+            [
+                "b3f23e4f.19d02"
+            ]
+        ]
+    },
+    {
+        "id": "95fc88a7.1a3ea8",
+        "type": "ui_slider",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "label": "Time Interval",
+        "tooltip": "",
+        "group": "4435e6b8.8f7528",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "all",
+        "topic": "",
+        "min": "5",
+        "max": "60",
+        "step": "5",
+        "x": 530,
+        "y": 900,
+        "wires": [
+            [
+                "33184c14.44c774",
+                "f82d86fd.26fa98"
+            ]
+        ]
+    },
+    {
+        "id": "33184c14.44c774",
         "type": "ui_text",
         "z": "b43ac849.4051e",
-        "group": "7df1b373.39877c",
+        "group": "4435e6b8.8f7528",
         "order": 4,
         "width": 0,
         "height": 0,
-        "name": "Calibration header",
-        "label": "-- Calibration --",
+        "name": "",
+        "label": "Minutes:",
         "format": "{{msg.payload}}",
-        "layout": "row-center",
-        "x": 320,
-        "y": 620,
+        "layout": "row-left",
+        "x": 780,
+        "y": 900,
         "wires": []
+    },
+    {
+        "id": "53f0f706.16b848",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "cloud_logging_url",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 780,
+        "wires": [
+            [
+                "c0b463f5.c78e8"
+            ]
+        ]
+    },
+    {
+        "id": "ae4e9e4a.f1abb",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "log_to_cloud",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 840,
+        "wires": [
+            [
+                "828b9ff1.ff817"
+            ]
+        ]
+    },
+    {
+        "id": "eec5672.3b26398",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "cloud_logging_interval",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 900,
+        "wires": [
+            [
+                "95fc88a7.1a3ea8"
+            ]
+        ]
+    },
+    {
+        "id": "322a0dee.fa0922",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cloud_logging_url",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b3f23e4f.19d02",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "log_to_cloud",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f82d86fd.26fa98",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cloud_logging_interval",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 850,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e0163ae.a8aa8",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "Setup cloud post",
+        "func": "var postEnabled = (flow.get('log_to_cloud'))||false;\nvar interval = flow.get('cloud_logging_interval')||15;\ninterval *= 60000;\nif (postEnabled && flow.get('cloud_logging_url')){\n    var lastPost = flow.get('lastpost')||0;\n\n    if (msg.timestamp - lastPost > interval){\n        flow.set('lastpost' , msg.timestamp);\n        msg.headers = {};\n        msg.headers['Content-type'] = 'application/json';\n        msg.url = flow.get('cloud_logging_url');\n        payload = \n            {\"name\":msg.devicename,\n            \"pressure\":msg.pressure,\n            \"pressure_unit\":msg.pressure_unit};\n        msg.payload = JSON.stringify(payload);\n\n        return msg;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1620,
+        "y": 320,
+        "wires": [
+            [
+                "65252f1a.ca0fa",
+                "7f8ccbc3.897b64"
+            ]
+        ]
+    },
+    {
+        "id": "65252f1a.ca0fa",
+        "type": "debug",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1790,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "fd7b11a3.94488",
+        "type": "ui_text_input",
+        "z": "b43ac849.4051e",
+        "name": "Device Name",
+        "label": "Device Name [use RETURN to save]",
+        "tooltip": "",
+        "group": "7df1b373.39877c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 560,
+        "y": 440,
+        "wires": [
+            [
+                "780dd3d1.e54f2c"
+            ]
+        ]
+    },
+    {
+        "id": "780dd3d1.e54f2c",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "devicename",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dae9f89f.cc68c8",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "devicename",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 440,
+        "wires": [
+            [
+                "fd7b11a3.94488"
+            ]
+        ]
+    },
+    {
+        "id": "7f8ccbc3.897b64",
+        "type": "http request",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 1840,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bd861694.4750d8",
+        "type": "ui_button",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "group": "7df1b373.39877c",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Reset Calibration",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 350,
+        "y": 700,
+        "wires": [
+            [
+                "7540c4ea.89754c"
+            ]
+        ]
+    },
+    {
+        "id": "7540c4ea.89754c",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "Reset calibration",
+        "func": "flow.set('adc_zero_offset', 0);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 700,
+        "wires": [
+            []
+        ]
     }
 ]
