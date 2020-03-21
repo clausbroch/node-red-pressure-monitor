@@ -1689,7 +1689,7 @@
         "type": "function",
         "z": "b43ac849.4051e",
         "name": "Send comment",
-        "func": "var comment = msg.payload;\nflow.set('comment', comment);\nflow.set('lastpost', 0);\nmsg.payload = \"Sending: \" + comment;\nreturn msg;",
+        "func": "var comment = msg.payload;\nif(comment !== \"\") {\n    flow.set('comment', comment);\n    flow.set('lastpost', 0);\n    msg.payload = \"Sending: \" + comment;\n\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 910,
@@ -1738,7 +1738,7 @@
         "z": "b43ac849.4051e",
         "name": "",
         "pauseType": "delay",
-        "timeout": "15",
+        "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
         "nbRateUnits": "1",
@@ -1796,6 +1796,18 @@
             [
                 "dc9645e0.515b08"
             ]
+        ]
+    },
+    {
+        "id": "9d4d64ab.616698",
+        "type": "ui_ui_control",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "events": "all",
+        "x": 340,
+        "y": 1580,
+        "wires": [
+            []
         ]
     }
 ]

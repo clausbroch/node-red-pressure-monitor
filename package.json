@@ -2,7 +2,11 @@
     "name": "PressureMonitor",
     "description": "A Node-RED Project",
     "version": "0.0.1",
-    "dependencies": {},
+    "dependencies": {
+        "node-red-contrib-i2c": "0.5.5",
+        "node-red-dashboard": "2.19.4",
+        "node-red-node-smooth": "0.1.2"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flow.json",
