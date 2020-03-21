@@ -1001,7 +1001,7 @@
         "func": "var raw_adc = flow.get('raw_adc') || 0;\nvar sensor_min_adc = flow.get('sensor_min_adc') || 0;\nvar adc_zero_offset = sensor_min_adc - raw_adc;\nflow.set('adc_zero_offset', adc_zero_offset);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 570,
+        "x": 600,
         "y": 660,
         "wires": [
             []
@@ -1245,7 +1245,7 @@
         "y": 840,
         "wires": [
             [
-                "b3f23e4f.19d02"
+                "87fe0464.4d8938"
             ]
         ]
     },
@@ -1398,31 +1398,6 @@
         ]
     },
     {
-        "id": "b3f23e4f.19d02",
-        "type": "change",
-        "z": "b43ac849.4051e",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "log_to_cloud",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 840,
-        "y": 840,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "f82d86fd.26fa98",
         "type": "change",
         "z": "b43ac849.4051e",
@@ -1452,7 +1427,7 @@
         "type": "function",
         "z": "b43ac849.4051e",
         "name": "Setup cloud post",
-        "func": "var postEnabled = (flow.get('log_to_cloud'))||false;\nvar interval = flow.get('cloud_logging_interval')||15;\ninterval *= 60000;\nif (postEnabled && flow.get('cloud_logging_url')){\n    var lastPost = flow.get('lastpost')||0;\n\n    if (msg.timestamp - lastPost > interval){\n        flow.set('lastpost' , msg.timestamp);\n        msg.headers = {};\n        msg.headers['Content-type'] = 'application/json';\n        msg.url = flow.get('cloud_logging_url');\n        payload = \n            {\"name\":msg.devicename,\n            \"pressure\":msg.pressure,\n            \"pressure_unit\":msg.pressure_unit};\n        msg.payload = JSON.stringify(payload);\n\n        return msg;\n    }\n}",
+        "func": "var postEnabled = (flow.get('log_to_cloud'))||false;\nvar interval = flow.get('cloud_logging_interval')||15;\ninterval *= 60000;\nif (postEnabled && flow.get('cloud_logging_url')){\n    var lastPost = flow.get('lastpost')||0;\n\n    if (msg.timestamp - lastPost > interval){\n        flow.set('lastpost' , msg.timestamp);\n        msg.headers = {};\n        msg.headers['Content-type'] = 'application/json';\n        msg.url = flow.get('cloud_logging_url');\n        payload = \n            {\"name\":msg.devicename,\n            \"comment\":flow.get('comment'),\n            \"pressure\":msg.pressure,\n            \"pressure_unit\":msg.pressure_unit};\n        msg.payload = JSON.stringify(payload);\n\n        return msg;\n    }\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 1620,
@@ -1558,7 +1533,7 @@
         "id": "7f8ccbc3.897b64",
         "type": "http request",
         "z": "b43ac849.4051e",
-        "name": "",
+        "name": "Log to cloud",
         "method": "POST",
         "ret": "obj",
         "paytoqs": false,
@@ -1570,7 +1545,9 @@
         "x": 1840,
         "y": 320,
         "wires": [
-            []
+            [
+                "e74bb27a.95dea"
+            ]
         ]
     },
     {
@@ -1611,6 +1588,214 @@
         "y": 700,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "b26f16e4.014de8",
+        "type": "catch",
+        "z": "b43ac849.4051e",
+        "name": "Cloud logging errors",
+        "scope": [
+            "7f8ccbc3.897b64"
+        ],
+        "uncaught": false,
+        "x": 1450,
+        "y": 500,
+        "wires": [
+            [
+                "f223e498.9bbee8",
+                "7a32a6fb.52df68"
+            ]
+        ]
+    },
+    {
+        "id": "f223e498.9bbee8",
+        "type": "template",
+        "z": "b43ac849.4051e",
+        "name": "Format error",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Alert: {{error.message}}",
+        "output": "str",
+        "x": 1650,
+        "y": 500,
+        "wires": [
+            [
+                "21f01fbe.6008a"
+            ]
+        ]
+    },
+    {
+        "id": "21f01fbe.6008a",
+        "type": "ui_toast",
+        "z": "b43ac849.4051e",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 1850,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "7a32a6fb.52df68",
+        "type": "debug",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1660,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "e97ffcda.de57a",
+        "type": "ui_text_input",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "label": "Comment [use RETURN to send]",
+        "tooltip": "",
+        "group": "4435e6b8.8f7528",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "mode": "text",
+        "delay": "0",
+        "topic": "",
+        "x": 600,
+        "y": 1000,
+        "wires": [
+            [
+                "9181fea8.94672",
+                "727f1625.57fc48"
+            ]
+        ]
+    },
+    {
+        "id": "9181fea8.94672",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "Send comment",
+        "func": "var comment = msg.payload;\nflow.set('comment', comment);\nflow.set('lastpost', 0);\nmsg.payload = \"Sending: \" + comment;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 910,
+        "y": 1000,
+        "wires": [
+            [
+                "dc9645e0.515b08"
+            ]
+        ]
+    },
+    {
+        "id": "dc9645e0.515b08",
+        "type": "ui_toast",
+        "z": "b43ac849.4051e",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "sendall": false,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 1270,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "e74bb27a.95dea",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "Clear comment",
+        "func": "flow.set('comment', '');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2130,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "727f1625.57fc48",
+        "type": "delay",
+        "z": "b43ac849.4051e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "15",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 200,
+        "y": 1000,
+        "wires": [
+            [
+                "4b490774.ab9fd8"
+            ]
+        ]
+    },
+    {
+        "id": "4b490774.ab9fd8",
+        "type": "change",
+        "z": "b43ac849.4051e",
+        "name": "clear comment",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 1000,
+        "wires": [
+            [
+                "e97ffcda.de57a"
+            ]
+        ]
+    },
+    {
+        "id": "87fe0464.4d8938",
+        "type": "function",
+        "z": "b43ac849.4051e",
+        "name": "set cloud logging",
+        "func": "flow.set('log_to_cloud',msg.payload);\nflow.set('lastpost', 0);\n\nif (msg.payload){\n    msg.payload = \"Logging request sent. Waiting for response.\";\n}\nelse {\n    msg.payload = \"Logging disabled.\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 910,
+        "y": 840,
+        "wires": [
+            [
+                "dc9645e0.515b08"
+            ]
         ]
     }
 ]
