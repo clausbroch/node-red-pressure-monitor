@@ -1809,5 +1809,56 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "94bc5a1b.1b60b8",
+        "type": "inject",
+        "z": "b43ac849.4051e",
+        "name": "Hide Debug",
+        "topic": "",
+        "payload": "{\"group\":{\"hide\":[\"Logging_Debug\"]}}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 1530,
+        "y": 40,
+        "wires": [
+            [
+                "1eb597d1.9d4bf8"
+            ]
+        ]
+    },
+    {
+        "id": "1eb597d1.9d4bf8",
+        "type": "ui_ui_control",
+        "z": "b43ac849.4051e",
+        "name": "Debug Group",
+        "x": 1760,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f9711bd8.4f1ce8",
+        "type": "inject",
+        "z": "b43ac849.4051e",
+        "name": "Show Debug",
+        "topic": "",
+        "payload": "{\"group\":{\"show\":[\"Logging_Debug\"]}}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 1530,
+        "y": 80,
+        "wires": [
+            [
+                "1eb597d1.9d4bf8"
+            ]
+        ]
     }
 ]
